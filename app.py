@@ -1,8 +1,10 @@
 from flask import Flask, request, send_file
+from flask_cors import CORS
 import requests
 import os
 
 app = Flask(__name__)
+CORS(app)  # ✅ THIS FIXES YOUR ERROR
 
 API_URL = "https://api-inference.huggingface.co/models/coqui/XTTS-v2"
 HEADERS = {"Authorization": "Bearer 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"}
@@ -24,9 +26,8 @@ def generate():
             files={"audio": voice}
         )
 
-        # Check if API worked
         if response.status_code != 200:
-            return f"Error from API: {response.text}"
+            return f"API Error: {response.text}"
 
         with open("output.wav", "wb") as f:
             f.write(response.content)
@@ -37,5 +38,5 @@ def generate():
         return f"Error: {str(e)}"
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))  # IMPORTANT FIX
+    port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
