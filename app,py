@@ -4,7 +4,7 @@ import requests
 app = Flask(__name__)
 
 API_URL = "https://api-inference.huggingface.co/models/coqui/XTTS-v2"
-HEADERS = {"Authorization": "Bearer YOUR_TOKEN"}
+HEADERS = {"Authorization": "Bearer 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"}
 
 @app.route("/")
 def home():
